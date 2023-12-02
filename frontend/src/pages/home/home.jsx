@@ -51,8 +51,8 @@ export default function Home() {
     )
 
     function setCreds(){
-        setEmail(localStorage.getItem('email'))
-        setPassword(localStorage.getItem('password'))
+        // setEmail(localStorage.getItem('email'))
+        // setPassword(localStorage.getItem('password'))
         console.log(email,password)
     }
 

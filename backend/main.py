@@ -69,7 +69,7 @@ def get_questions():
     questions=Tests.objects.all().filter(name=user_data['subject'])
     questionss=[]
     for question in questions:
-        questionss.append({'id':str(question.id),'question':str(question.question),'choices':list(question.choices)})
+        questionss.append({'id':str(question.id),'question':str(question.question),'choices':list(question.choices),'answer':str(question.answer)})
     return jsonify({'status':'success','code':101,'data':questionss})
 
 @app.route('/users')
@@ -83,8 +83,45 @@ def get_users():
 
 @app.route('/user')
 def get_me():
-    connect(host=DB_URI)
-    res=User.objects(email='mimi@mimi.com')
-    return jsonify(res.to_dict())
+    try:
+        email=session["email"]
+    except:
+        email=None
+    res={'email':email}
+    return jsonify(res)
+
+
+@app.route('/update_score',methods=['GET',"POST"])
+def update_score():
+    user_data=request.get_json()
+    try:
+        email=session["email"]
+    except:
+        email=None
+    new_score=user_data['score']
+    if email is not None:
+        user = Users.objects(email=email).first()
+        user.update(set__score=user.score+user_data['score'])
+        return jsonify({'status':'success','code':5})
+    else:
+        return jsonify({'status':'failed','code':6})
+    
+
+@app.route('/get_leader_board',methods=['GET',"POST"])
+def get_leader_board():
+    user_data=request.get_json()
+    try:
+        email=session["email"]
+    except:
+        email=None
+    new_score=user_data['score']
+    if email is not None:
+        user = Users.objects(email=email).first()
+        user.update(set__score=user.score+user_data['score'])
+        return jsonify({'status':'success','code':5})
+    else:
+        return jsonify({'status':'failed','code':6})
+
+
 
 app.run(host='0.0.0.0',debug=True)

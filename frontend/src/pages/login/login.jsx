@@ -52,8 +52,8 @@ export default function Login(){
                     console.log(res.data)
                     var response_data=res.data
                     if (response_data['code']===2){
-                        localStorage.setItem('email',email)
-                        localStorage.setItem('password',password)
+                        // localStorage.setItem('email',email)
+                        // localStorage.setItem('password',password)
                         nav('/home')
                     }else if(response_data['code']){
                         setMessage(response_data['message'])

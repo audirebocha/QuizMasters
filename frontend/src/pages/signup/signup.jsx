@@ -4,10 +4,10 @@ import axios from "axios";
 import global from "../../../global.js";
 
 export default function Signup() {
-    const [username, setUsername] = React.useState("peter kimutai");
-    const [email, setEmail] = React.useState("peter.kimutai@gmail.com");
-    const [password, setPassword] = React.useState("peter.kimutai@gmail.com");
-    const [Confirmpassword, setConfirmpassword] = React.useState("peter.kimutai@gmail.com");
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [Confirmpassword, setConfirmpassword] = React.useState("");
     const [message, setMessage] = useState('')
 
 
@@ -49,7 +49,7 @@ export default function Signup() {
     function send_registration_api() {
         //Check password if equal
         if (password === Confirmpassword) {
-            var data = { 'user_name': "Peter Kimutai", 'email': 'peter.kimutai@gmail.com', 'password': '123' }
+            var data = { 'user_name': username, 'email': email, 'password': password }
             var url = "/register"
             var headers = { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
             var api_url = global.backend_server + url
