@@ -15,6 +15,7 @@ config = {
   'ORIGINS': [
     'http://localhost:5173',  # React
     'http://127.0.0.1:8080',  # React
+    'https://sir-chir.web.app'
   ],
 
   'SECRET_KEY': 'suinm'
@@ -114,11 +115,16 @@ def get_leader_board():
         email=session["email"]
     except:
         email=None
-    new_score=user_data['score']
+    connect(host=DB_URI)
+    users=Users.objects.all()
     if email is not None:
-        user = Users.objects(email=email).first()
-        user.update(set__score=user.score+user_data['score'])
-        return jsonify({'status':'success','code':5})
+        userss=[]
+        for user in users:
+            if(user.email==email):
+                userss.append({'username':'you','score':user.score})
+            else:
+                userss.append({'username':str(user.username),'score':user.score})
+        return jsonify({'status':'success','data':userss,'code':7})
     else:
         return jsonify({'status':'failed','code':6})
 
