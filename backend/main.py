@@ -47,6 +47,7 @@ def login():
     if user:
         if user.password==user_data['password']:
             session["email"]=user_data['email']
+            print(user_data['email'],session["email"])
             return jsonify({'message':'You are successfully logged in','status':'success','code':2})
         else:
             return jsonify({'message':'Invalid password','status':'failure','code':3})
